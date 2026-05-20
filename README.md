@@ -4,7 +4,11 @@ Technical guide for developers participating in the India Agentic AI Open Hackat
 
 ## Review The Guide
 
-Open the guide here:
+Open the hosted guide here:
+
+- https://openhackathons-org.github.io/AgenticAI-Workshop/
+
+The source HTML is here:
 
 - [India Agentic AI Open Hackathon Technical Guide](india-agentic-ai-open-hackathon-technical-guide.html)
 

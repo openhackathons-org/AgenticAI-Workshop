@@ -1,0 +1,1889 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>India Agentic AI Open Hackathon - Know-Before-You-Go Technical Guide</title>
+  <link rel="icon" href="https://www.nvidia.com/favicon.ico">
+  <style>
+    :root {
+      --bg: #0d1117;
+      --surface: #161b22;
+      --surface-2: #1f2630;
+      --surface-3: #111821;
+      --border: #30363d;
+      --text: #e6edf3;
+      --muted: #9aa4af;
+      --green: #76b900;
+      --blue: #58a6ff;
+      --yellow: #d29922;
+      --orange: #f0883e;
+      --red: #ff7b72;
+      --purple: #bc8cff;
+    }
+
+    * { box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--text);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      font-size: 15px;
+      line-height: 1.65;
+    }
+
+    a { color: var(--blue); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    header {
+      border-bottom: 1px solid var(--border);
+      background:
+        radial-gradient(circle at 35% -20%, rgba(118, 185, 0, 0.16), transparent 42%),
+        linear-gradient(145deg, #0d1117 0%, #10190d 45%, #0d1117 100%);
+      padding: 38px 28px 30px;
+    }
+
+    .wrap {
+      width: min(1240px, calc(100% - 40px));
+      margin: 0 auto;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      border: 1px solid rgba(118, 185, 0, 0.35);
+      border-radius: 999px;
+      background: rgba(118, 185, 0, 0.1);
+      color: var(--green);
+      padding: 4px 12px;
+      font-size: 12px;
+      font-weight: 750;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+
+    h1 {
+      margin: 16px 0 8px;
+      font-size: clamp(28px, 4vw, 44px);
+      line-height: 1.08;
+    }
+
+    .subtitle {
+      max-width: 980px;
+      color: var(--muted);
+      font-size: 17px;
+      margin: 0;
+    }
+
+    .meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 18px;
+    }
+
+    .pill {
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.035);
+      color: var(--muted);
+      padding: 5px 12px;
+      font-size: 13px;
+    }
+
+    .tabbar {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      border-bottom: 1px solid var(--border);
+      background: rgba(13, 17, 23, 0.96);
+      backdrop-filter: blur(12px);
+      overflow-x: auto;
+    }
+
+    .tabs {
+      display: flex;
+      gap: 0;
+      min-width: max-content;
+    }
+
+    .tab {
+      border: 0;
+      border-bottom: 2px solid transparent;
+      background: transparent;
+      color: var(--muted);
+      cursor: pointer;
+      font: inherit;
+      font-size: 14px;
+      font-weight: 700;
+      padding: 14px 16px 12px;
+      white-space: nowrap;
+    }
+
+    .tab:hover { color: var(--text); }
+    .tab.active { color: var(--green); border-bottom-color: var(--green); }
+
+    .layout {
+      display: grid;
+      grid-template-columns: 270px minmax(0, 1fr);
+      gap: 28px;
+      padding: 32px 0 56px;
+    }
+
+    aside {
+      position: sticky;
+      top: 58px;
+      align-self: start;
+      max-height: calc(100vh - 76px);
+      overflow-y: auto;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      background: var(--surface);
+      padding: 16px;
+    }
+
+    aside strong {
+      display: block;
+      margin-bottom: 10px;
+      font-size: 12px;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    aside a {
+      display: block;
+      border-left: 2px solid transparent;
+      color: var(--muted);
+      padding: 5px 8px;
+      font-size: 13px;
+    }
+
+    aside a:hover {
+      color: var(--text);
+      background: rgba(255, 255, 255, 0.03);
+      text-decoration: none;
+    }
+
+    main { min-width: 0; }
+
+    .panel { display: none; }
+    .panel.active { display: block; }
+
+    h2 {
+      margin: 38px 0 15px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid var(--border);
+      font-size: 24px;
+      line-height: 1.25;
+      scroll-margin-top: 78px;
+    }
+
+    h2:first-child { margin-top: 0; }
+
+    h3 {
+      margin: 26px 0 10px;
+      font-size: 18px;
+      line-height: 1.3;
+      scroll-margin-top: 78px;
+    }
+
+    h4 {
+      margin: 20px 0 8px;
+      font-size: 15px;
+      scroll-margin-top: 78px;
+    }
+
+    p { margin: 0 0 14px; }
+    ul, ol { padding-left: 22px; margin: 0 0 15px; }
+    li { margin-bottom: 6px; }
+
+    code {
+      border: 1px solid var(--border);
+      border-radius: 5px;
+      background: var(--surface-2);
+      color: #ffb4b4;
+      padding: 1px 5px;
+      font-size: 0.92em;
+    }
+
+    .lead {
+      border: 1px solid rgba(118, 185, 0, 0.24);
+      border-radius: 8px;
+      background: rgba(118, 185, 0, 0.075);
+      color: var(--muted);
+      padding: 15px 16px;
+      margin: 16px 0 20px;
+    }
+
+    .warning {
+      border-left: 3px solid var(--orange);
+      border-radius: 0 8px 8px 0;
+      background: rgba(240, 136, 62, 0.08);
+      color: var(--muted);
+      padding: 13px 15px;
+      margin: 16px 0;
+    }
+
+    .success {
+      border-left: 3px solid var(--green);
+      border-radius: 0 8px 8px 0;
+      background: rgba(118, 185, 0, 0.08);
+      color: var(--muted);
+      padding: 13px 15px;
+      margin: 16px 0;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
+      margin: 16px 0;
+    }
+
+    .grid.two { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+
+    .card {
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      background: var(--surface);
+      padding: 15px;
+    }
+
+    .card h3, .card h4 { margin-top: 0; }
+    .card p:last-child, .card ul:last-child, .card ol:last-child { margin-bottom: 0; }
+
+    .code-wrap {
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      background: var(--surface-3);
+      overflow: hidden;
+      margin: 16px 0;
+    }
+
+    .code-head {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      border-bottom: 1px solid var(--border);
+      background: var(--surface);
+      color: var(--muted);
+      padding: 8px 12px;
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .copy {
+      margin-left: auto;
+      border: 1px solid rgba(88, 166, 255, 0.28);
+      border-radius: 5px;
+      background: rgba(88, 166, 255, 0.09);
+      color: var(--blue);
+      cursor: pointer;
+      font: inherit;
+      font-size: 11px;
+      font-weight: 700;
+      padding: 3px 9px;
+    }
+
+    pre {
+      margin: 0;
+      overflow-x: auto;
+      padding: 15px;
+      color: #d6deeb;
+      font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+      font-size: 13px;
+      line-height: 1.55;
+    }
+
+    pre code {
+      border: 0;
+      border-radius: 0;
+      background: transparent;
+      color: inherit;
+      padding: 0;
+      font-size: inherit;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 16px 0;
+      font-size: 14px;
+    }
+
+    th, td {
+      border: 1px solid var(--border);
+      padding: 10px 12px;
+      vertical-align: top;
+    }
+
+    th {
+      background: var(--surface);
+      color: var(--text);
+      text-align: left;
+    }
+
+    td { color: var(--muted); }
+
+    .path {
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      overflow: hidden;
+      margin: 16px 0;
+    }
+
+    .path div {
+      border-bottom: 1px solid var(--border);
+      background: var(--surface);
+      padding: 11px 13px;
+    }
+
+    .path div:last-child { border-bottom: 0; }
+
+    footer {
+      border-top: 1px solid var(--border);
+      color: var(--muted);
+      padding: 24px 0 36px;
+      font-size: 13px;
+    }
+
+    @media (max-width: 980px) {
+      .layout { grid-template-columns: 1fr; }
+      aside { position: static; max-height: none; }
+      .grid, .grid.two { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="wrap">
+      <span class="badge">Know-Before-You-Go</span>
+      <h1>India Agentic AI Open Hackathon Technical Guide</h1>
+      <p class="subtitle">A developer-facing starter repo in document form. Use it before the workshop and hackathon to set up accounts, choose the right NVIDIA path, copy starter configs, and arrive ready to build.</p>
+      <div class="meta">
+        <span class="pill">For eligible applicants and developer teams</span>
+        <span class="pill">No hands-on workshop required</span>
+        <span class="pill">Primary focus: Nemotron, NIM, NemoClaw, and NeMo</span>
+      </div>
+    </div>
+  </header>
+
+  <nav class="tabbar">
+    <div class="tabs wrap" role="tablist" aria-label="Guide sections">
+      <button class="tab active" data-tab="overview">Overview</button>
+      <button class="tab" data-tab="nim">Common: NIM + Nemotron</button>
+      <button class="tab" data-tab="a">Track A: Agentic Workflows</button>
+      <button class="tab" data-tab="b">Track B: Finetuning</button>
+      <button class="tab" data-tab="c">Track C: Synthetic Data</button>
+      <button class="tab" data-tab="checklists">Checklists</button>
+      <button class="tab" data-tab="links">Links</button>
+    </div>
+  </nav>
+
+  <div class="wrap layout">
+    <aside>
+      <strong>Guide map</strong>
+      <a href="#overview-goal">How to use this guide</a>
+      <a href="#overview-track-map">Track selection map</a>
+      <a href="#nim-setup">NIM setup</a>
+      <a href="#nim-chat">Chat API starter</a>
+      <a href="#nim-tools">Tool calling</a>
+      <a href="#a-nat">NeMo Agent Toolkit</a>
+      <a href="#a-nemoclaw">NemoClaw</a>
+      <a href="#b-bridge">Megatron-Bridge</a>
+      <a href="#b-rl">NeMo RL</a>
+      <a href="#c-designer">Data Designer</a>
+      <a href="#c-curator">Curator</a>
+      <a href="#final-checklist">Final checklist</a>
+    </aside>
+
+    <main>
+      <section class="panel active" id="overview">
+        <h2 id="overview-goal">How To Use This Guide</h2>
+        <div class="lead">
+          This guide is intentionally more technical than the public workshop agenda. It is the companion material developers should use to prepare their machines, teams, repositories, and technical plan before the hackathon build days.
+        </div>
+
+        <div class="grid">
+          <article class="card">
+            <h3>Before the workshop</h3>
+            <ul>
+              <li>Create NVIDIA Developer, build.nvidia.com, NGC, and Hugging Face accounts if needed.</li>
+              <li>Read the common NIM + Nemotron section.</li>
+              <li>Pick a primary track and one backup track.</li>
+              <li>Bring one architecture sketch and one technical blocker question.</li>
+            </ul>
+          </article>
+          <article class="card">
+            <h3>During the workshop</h3>
+            <ul>
+              <li>Use tabs as reference material during demos.</li>
+              <li>Mark which code snippets your team will reuse.</li>
+              <li>Ask mentors where your project fits in the NVIDIA stack.</li>
+              <li>Decide what you will build on Day 0 and what you will defer.</li>
+            </ul>
+          </article>
+          <article class="card">
+            <h3>Before hackathon Day 0</h3>
+            <ul>
+              <li>Have a runnable repo with a license and README.</li>
+              <li>Prepare small test data and an evaluation prompt set.</li>
+              <li>Confirm your inference path: hosted NIM, self-hosted NIM, vLLM, or cluster.</li>
+              <li>Define a demo path that works even if the full system is not complete.</li>
+            </ul>
+          </article>
+        </div>
+
+        <h2 id="overview-track-map">Track Selection Map</h2>
+        <table>
+          <thead>
+            <tr>
+              <th>If your project is mainly...</th>
+              <th>Choose</th>
+              <th>Use these NVIDIA assets</th>
+              <th>Expected demo proof</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Connecting tools, APIs, documents, agents, and workflows into a working assistant or automation service.</td>
+              <td>Track A: Agentic Workflows</td>
+              <td>Nemotron, NIM, NeMo Agent Toolkit, MCP, A2A, optional NemoClaw.</td>
+              <td>A traced workflow with tool calls, result synthesis, and at least one reliability/evaluation metric.</td>
+            </tr>
+            <tr>
+              <td>Changing model behavior for a domain, persona, language, or task using training or post-training.</td>
+              <td>Track B: Model Finetuning and Customisation</td>
+              <td>NeMo, Megatron-Bridge, SFT, LoRA/PEFT, NeMo RL, NIM deployment.</td>
+              <td>Base vs adapted comparison, training data sample, evaluation result, and deployment path.</td>
+            </tr>
+            <tr>
+              <td>Creating structured, high-quality training or evaluation data for low-resource, domain, or agentic tasks.</td>
+              <td>Track C: Synthetic Data Generation</td>
+              <td>Nemotron, NeMo Data Designer, NeMo Curator, LLM-as-judge, validators.</td>
+              <td>A generated dataset sample plus quality filters, deduplication, and export format.</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <h2 id="overview-repo">Recommended Repo Structure</h2>
+        <div class="code-wrap">
+          <div class="code-head">text <button class="copy" onclick="copyCode(this)">Copy</button></div>
+          <pre><code>india-agentic-ai-hackathon/
+  README.md
+  LICENSE
+  .gitignore
+  docs/
+    architecture.md
+    demo-script.md
+    evaluation-plan.md
+  app/
+    api/
+    ui/
+    agents/
+  configs/
+    nim.env.example
+    nat/
+    training/
+    synthetic-data/
+  data/
+    samples/
+    eval/
+  notebooks/
+  scripts/
+    smoke_test.sh
+    run_demo.sh
+  results/
+    screenshots/
+    eval_report.md</code></pre>
+        </div>
+
+        <div class="success">
+          Minimum bar for a strong technical submission: a clear track, runnable demo path, evidence of NVIDIA stack usage, and a small but believable evaluation loop.
+        </div>
+      </section>
+
+      <section class="panel" id="nim">
+        <h2 id="nim-setup">Common Foundation: NIM + Nemotron</h2>
+        <p>NIM and Nemotron are the common layer across all three tracks. NIM gives you a production-style inference endpoint with an OpenAI-compatible API. Nemotron gives you a strong NVIDIA model family for reasoning, tool use, long-context work, and synthetic data generation.</p>
+
+        <h3>Accounts and keys</h3>
+        <div class="grid two">
+          <article class="card">
+            <h3>Hosted path</h3>
+            <ol>
+              <li>Sign in at <a href="https://build.nvidia.com/" target="_blank" rel="noreferrer">build.nvidia.com</a>.</li>
+              <li>Open the model page you want to test.</li>
+              <li>Create an API key and store it as <code>NVIDIA_API_KEY</code>.</li>
+              <li>Use <code>https://integrate.api.nvidia.com/v1</code> as the base URL.</li>
+            </ol>
+          </article>
+          <article class="card">
+            <h3>Self-hosted path</h3>
+            <ol>
+              <li>Prepare Docker and NVIDIA Container Toolkit.</li>
+              <li>Log in to <code>nvcr.io</code> with an NGC API key.</li>
+              <li>Pull/run the NIM container for your selected model.</li>
+              <li>Use your local container URL, usually <code>http://localhost:8000/v1</code>.</li>
+            </ol>
+          </article>
+        </div>
+
+        <div class="warning">
+          Keep API keys out of notebooks, screenshots, commits, and pitch decks. Commit only <code>.env.example</code>, never <code>.env</code>.
+        </div>
+
+        <h3>NIM path comparison</h3>
+        <table>
+          <thead>
+            <tr><th>Item</th><th>Hosted NIM</th><th>Self-hosted NIM</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Best for</td><td>Fast prototyping, laptops, early demos.</td><td>Data control, private infrastructure, lower network latency.</td></tr>
+            <tr><td>Local GPU</td><td>Not required.</td><td>Required for local deployment.</td></tr>
+            <tr><td>Key</td><td><code>NVIDIA_API_KEY</code> from build.nvidia.com.</td><td><code>NGC_API_KEY</code> for pulling containers and assets.</td></tr>
+            <tr><td>Base URL</td><td><code>https://integrate.api.nvidia.com/v1</code></td><td><code>http://localhost:8000/v1</code> or cluster endpoint.</td></tr>
+            <tr><td>Hackathon advice</td><td>Start here for all teams.</td><td>Move here when privacy, latency, or deployment realism matters.</td></tr>
+          </tbody>
+        </table>
+
+        <h3>Nemotron model selection</h3>
+        <table>
+          <thead>
+            <tr><th>Model</th><th>Use in hackathon</th><th>Rule of thumb</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><code>nvidia/nemotron-3-nano-30b-a3b</code></td><td>Default starting model for agentic reasoning, tool calling, and SDG prototyping.</td><td>Start with Nano unless you have a clear reason not to.</td></tr>
+            <tr><td><code>nvidia/nemotron-3-super-120b-a12b</code></td><td>Higher-quality planning, heavier multi-agent workflows, and more complex data generation.</td><td>Upgrade when quality matters more than latency or cost.</td></tr>
+            <tr><td>Nemotron multimodal or VL variants</td><td>Optional extension for image, document, or visual reasoning projects.</td><td>Use only when the project actually needs multimodal inputs.</td></tr>
+          </tbody>
+        </table>
+
+        <h3>Starter environment</h3>
+        <div class="code-wrap">
+          <div class="code-head">bash <button class="copy" onclick="copyCode(this)">Copy</button></div>
+          <pre><code>mkdir nvidia-ai-starter
+cd nvidia-ai-starter
+python3 -m venv .venv
+source .venv/bin/activate
+
+pip install -U openai python-dotenv pandas rich
+
+cat &gt; .env.example &lt;&lt;'EOF'
+NVIDIA_API_KEY=nvapi-your-key
+NIM_BASE_URL=https://integrate.api.nvidia.com/v1
+NIM_MODEL=nvidia/nemotron-3-nano-30b-a3b
+EOF
+
+cp .env.example .env
+echo ".env" &gt;&gt; .gitignore</code></pre>
+        </div>
+
+        <h3 id="nim-chat">Chat completion starter</h3>
+        <div class="code-wrap">
+          <div class="code-head">python <button class="copy" onclick="copyCode(this)">Copy</button></div>
+          <pre><code># scripts/nim_chat_smoke_test.py
+import os
+from dotenv import load_dotenv
+from openai import OpenAI
+
+load_dotenv()
+
+client = OpenAI(
+    base_url=os.getenv("NIM_BASE_URL", "https://integrate.api.nvidia.com/v1"),
+    api_key=os.getenv("NVIDIA_API_KEY", "not-used"),
+)
+
+model = os.getenv("NIM_MODEL", "nvidia/nemotron-3-nano-30b-a3b")
+
+response = client.chat.completions.create(
+    model=model,
+    messages=[
+        {"role": "system", "content": "You are a concise technical mentor for hackathon teams."},
+        {"role": "user", "content": "Suggest a Track A architecture for invoice processing."},
+    ],
+    temperature=0.2,
+    max_tokens=600,
+)
+
+print(response.choices[0].message.content)</code></pre>
+        </div>
+
+        <h3>Streaming response</h3>
+        <div class="code-wrap">
+          <div class="code-head">python <button class="copy" onclick="copyCode(this)">Copy</button></div>
+          <pre><code>stream = client.chat.completions.create(
+    model=model,
+    messages=[{"role": "user", "content": "Create a demo script for a multilingual support agent."}],
+    stream=True,
+    temperature=0.3,
+    max_tokens=700,
+)
+
+for chunk in stream:
+    if chunk.choices and chunk.choices[0].delta.content:
+        print(chunk.choices[0].delta.content, end="", flush=True)
+print()</code></pre>
+        </div>
+
+        <h3>Reasoning controls</h3>
+        <p>Use non-thinking mode for fast routing and tool loops. Use thinking mode for deeper planning, architecture comparison, and data quality review. Avoid combining experimental parallel reasoning modes with tool-calling loops unless the model documentation explicitly supports it.</p>
+        <div class="code-wrap">
+          <div class="code-head">python <button class="copy" onclick="copyCode(this)">Copy</button></div>
+          <pre><code># Fast concise mode
+resp = client.chat.completions.create(
+    model=model,
+    messages=[{"role": "user", "content": "Draft a simple grievance-routing agent architecture."}],
+    temperature=0,
+    max_tokens=700,
+    extra_body={
+        "chat_template_kwargs": {
+            "enable_thinking": False
+        }
+    },
+)
+print(resp.choices[0].message.content)
+
+# Deeper planning mode
+resp = client.chat.completions.create(
+    model=model,
+    messages=[{"role": "user", "content": "Compare three architectures for a public-services assistant and choose one."}],
+    temperature=0,
+    max_tokens=1800,
+    extra_body={
+        "chat_template_kwargs": {
+            "enable_thinking": True
+        }
+    },
+)
+print(resp.choices[0].message.content)</code></pre>
+        </div>
+
+        <h3 id="nim-tools">Tool calling pattern</h3>
+        <p>Use tool calling when the model should decide when to call an application function, database lookup, policy engine, calculator, search API, or workflow step.</p>
+        <div class="code-wrap">
+          <div class="code-head">python <button class="copy" onclick="copyCode(this)">Copy</button></div>
+          <pre><code>import json
+
+tools = [{
+    "type": "function",
+    "function": {
+        "name": "lookup_policy",
+        "description": "Look up a company policy by topic.",
+        "parameters": {
+            "type": "object",
+            "properties": {
+                "topic": {"type": "string", "description": "Policy topic, for example travel or reimbursement"}
+            },
+            "required": ["topic"],
+        },
+    },
+}]
+
+def lookup_policy(topic: str) -&gt; str:
+    policies = {
+        "travel": "Flights require manager approval. Hotels must be under the city cap.",
+        "reimbursement": "Submit receipts within 30 days with project code and GST details.",
+    }
+    return policies.get(topic.lower(), "No policy found for that topic.")
+
+messages = [{"role": "user", "content": "Can I expense a hotel for my Bangalore workshop trip?"}]
+
+first = client.chat.completions.create(
+    model=model,
+    messages=messages,
+    tools=tools,
+    tool_choice="auto",
+    temperature=0,
+)
+
+assistant_message = first.choices[0].message
+messages.append(assistant_message)
+
+if assistant_message.tool_calls:
+    for call in assistant_message.tool_calls:
+        args = json.loads(call.function.arguments)
+        result = lookup_policy(**args)
+        messages.append({
+            "role": "tool",
+            "tool_call_id": call.id,
+            "content": result,
+        })
+
+    final = client.chat.completions.create(model=model, messages=messages, temperature=0.2)
+    print(final.choices[0].message.content)</code></pre>
+        </div>
+
+        <h3>Self-hosted NIM smoke tests</h3>
+        <div class="code-wrap">
+          <div class="code-head">bash <button class="copy" onclick="copyCode(this)">Copy</button></div>
+          <pre><code># Log in to NGC before pulling private/entitled containers.
+docker login nvcr.io -u '$oauthtoken' -p "$NGC_API_KEY"
+
+# Example pattern. Confirm the exact container path from the model page or NIM docs.
+docker run --rm -it --gpus all \
+  -e NGC_API_KEY="$NGC_API_KEY" \
+  -v "$HOME/.cache/nim:/opt/nim/.cache" \
+  -p 8000:8000 \
+  nvcr.io/nim/nvidia/nemotron-3-nano-30b-a3b:latest
+
+curl http://localhost:8000/v1/models
+
+curl http://localhost:8000/v1/chat/completions \
+  -H "Content-Type: application/json" \
+  -d '{
+    "model": "nvidia/nemotron-3-nano-30b-a3b",
+    "messages": [{"role": "user", "content": "Say hello from local NIM."}],
+    "max_tokens": 64
+  }'</code></pre>
+        </div>
+
+        <h3>Model-free NIM option</h3>
+        <p>Use model-free NIM only when you need to serve a supported custom or newer model path and understand the deployment requirements. For most hackathon teams, hosted NIM or a model-specific NIM container is simpler.</p>
+        <div class="code-wrap">
+          <div class="code-head">bash <button class="copy" onclick="copyCode(this)">Copy</button></div>
+          <pre><code>export LOCAL_NIM_CACHE="$HOME/.cache/nim"
+mkdir -p "$LOCAL_NIM_CACHE"
+
+export NIM_LLM_IMAGE="nvcr.io/nim/nvidia/model-free-nim:latest"
+export NIM_MODEL_PATH="hf://meta-llama/Llama-3.1-8B-Instruct"
+
+docker run --gpus all \
+  -e NIM_MODEL_PATH="$NIM_MODEL_PATH" \
+  -e HF_TOKEN="$HF_TOKEN" \
+  -v "$LOCAL_NIM_CACHE:/opt/nim/.cache" \
+  -p 8000:8000 \
+  "$NIM_LLM_IMAGE"</code></pre>
+        </div>
+
+        <h3>Common debugging checklist</h3>
+        <table>
+          <thead>
+            <tr><th>Symptom</th><th>Check</th><th>Fix</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>401 or 403</td><td>API key, account access, endpoint URL.</td><td>Regenerate key, re-export env var, verify model access.</td></tr>
+            <tr><td>404 model not found</td><td>Model ID mismatch between hosted endpoint and self-hosted endpoint.</td><td>Call <code>/v1/models</code> and use returned model ID.</td></tr>
+            <tr><td>Slow first response</td><td>Container cold start, model download, cache miss.</td><td>Warm up endpoint before demos and cache models.</td></tr>
+            <tr><td>JSON/tool parse errors</td><td>Prompt too loose or schema too complex.</td><td>Simplify schema, set temperature low, validate arguments.</td></tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section class="panel" id="a">
+        <h2 id="a-nat">Track A: Agentic Workflows</h2>
+        <p>Track A teams should aim to show a working agentic service, not just a chatbot. The service should plan, call tools, recover from failure, expose a usable interface, and report at least basic quality or latency metrics.</p>
+
+        <h3>Reference architecture</h3>
+        <div class="code-wrap">
+          <div class="code-head">text <button class="copy" onclick="copyCode(this)">Copy</button></div>
+          <pre><code>User / UI / API
+  -> NeMo Agent Toolkit workflow
+  -> Nemotron via NIM for reasoning
+  -> Tools:
+       - search / RAG
+       - databases
+       - business APIs
+       - document parsers
+       - calculators / validators
+  -> Optional MCP server/client boundary
+  -> Optional A2A specialist agent delegation
+  -> Trace, evaluation, final answer</code></pre>
+        </div>
+
+        <h3>Install NeMo Agent Toolkit</h3>
+        <div class="code-wrap">
+          <div class="code-head">bash <button class="copy" onclick="copyCode(this)">Copy</button></div>
+          <pre><code>mkdir track-a-agent
+cd track-a-agent
+python3 -m venv .venv
+source .venv/bin/activate
+
+pip install -U uv
+uv pip install "nvidia-nat[langchain,mcp,a2a,eval]"
+
+export NVIDIA_API_KEY=nvapi-your-key
+nat --help
+nat info components -t function</code></pre>
+        </div>
+
+        <h3>Minimal ReAct workflow config</h3>
+        <div class="code-wrap">
+          <div class="code-head">yaml <button class="copy" onclick="copyCode(this)">Copy</button></div>
+          <pre><code># configs/invoice_agent.yml
+llms:
+  nim_llm:
+    _type: nim
+    model_name: nvidia/nemotron-3-nano-30b-a3b
+    api_key: ${NVIDIA_API_KEY}
+    base_url: ${NIM_BASE_URL:-https://integrate.api.nvidia.com/v1}
+    temperature: 0.0
+    max_tokens: 1024
+
+functions:
+  current_datetime:
+    _type: current_datetime
+
+  wikipedia_search:
+    _type: wiki_search
+    max_results: 3
+
+  code_generator:
+    _type: code_generation
+    programming_language: Python
+    llm_name: nim_llm
+    description: "Generate Python helper code only when a code artifact is required."
+
+workflow:
+  _type: react_agent
+  llm_name: nim_llm
+  tool_names:
+    - current_datetime
+    - wikipedia_search
+    - code_generator
+  verbose: true
+  parse_agent_response_max_retries: 2</code></pre>
+        </div>
+
+        <h3>Workflow config patterns</h3>
+        <table>
+          <thead>
+            <tr><th>Config block</th><th>What it controls</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><code>llms</code></td><td>Model providers, model names, generation settings, and NIM base URLs.</td></tr>
+            <tr><td><code>functions</code></td><td>Built-in tools, custom Python tools, retrieval tools, calculators, and code tools.</td></tr>
+            <tr><td><code>function_groups</code></td><td>Grouped dynamic tools, especially MCP client tool groups.</td></tr>
+            <tr><td><code>workflow</code></td><td>The agent, router, sequential flow, or executor that binds model and tools.</td></tr>
+            <tr><td><code>eval</code></td><td>Datasets, evaluators, metrics, and output paths for quality checks.</td></tr>
+            <tr><td><code>general</code></td><td>Telemetry, logging, retries, object stores, and runtime-level settings.</td></tr>
+          </tbody>
+        </table>
+
+        <table>
+          <thead>
+            <tr><th>Workflow type</th><th>Use when</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><code>react_agent</code></td><td>You need a first agent with explicit tool reasoning and easy logs.</td></tr>
+            <tr><td>Tool-calling workflow</td><td>You want cleaner structured tool calls and less free-form reasoning.</td></tr>
+            <tr><td>Router agent</td><td>You need to send India-specific tasks to specialist workflows.</td></tr>
+            <tr><td>Sequential workflow</td><td>You need deterministic steps such as extract, validate, retrieve, respond.</td></tr>
+            <tr><td>Parallel workflow</td><td>You want several tools or specialists to answer, then merge results.</td></tr>
+          </tbody>
+        </table>
+
+        <h3>Run, serve, and test</h3>
+        <div class="code-wrap">
+          <div class="code-head">bash <button class="copy" onclick="copyCode(this)">Copy</button></div>
+          <pre><code># Run once from CLI.
+nat run --config_file configs/invoice_agent.yml \
+  --input "Design an enterprise invoice triage workflow and list the tools it needs."
+
+# Serve as an HTTP API.
+nat serve --config_file configs/invoice_agent.yml --host 0.0.0.0 --port 8000
+
+# Call it from another terminal.
+curl -X POST http://localhost:8000/generate \
+  -H "Content-Type: application/json" \
+  -d '{
+    "messages": [
+      {"role": "user", "content": "Check this invoice workflow for missing approval steps."}
+    ]
+  }'</code></pre>
+        </div>
+
+        <h3>MCP server pattern</h3>
+        <p>Expose workflow functions as MCP tools when another client or agent needs to call them.</p>
+        <div class="code-wrap">
+          <div class="code-head">bash <button class="copy" onclick="copyCode(this)">Copy</button></div>
+          <pre><code># Publish functions from the workflow as MCP tools.
+nat mcp serve --config_file configs/invoice_agent.yml --host 0.0.0.0 --port 9901
+
+# Common smoke test: list tools from an MCP-capable client, then call one tool.
+# Keep network and credential policies explicit if connecting enterprise systems.</code></pre>
+        </div>
+
+        <h3>MCP client pattern</h3>
+        <p>Use an MCP client group when your agent needs to consume tools from another local service, partner API wrapper, database adapter, or team-built tool server.</p>
+        <div class="code-wrap">
+          <div class="code-head">yaml <button class="copy" onclick="copyCode(this)">Copy</button></div>
+          <pre><code># configs/agent_with_mcp.yml
+function_groups:
+  mcp_public_data:
+    _type: mcp_client
+    server:
+      transport: streamable-http
+      url: "http://localhost:9901/mcp"
+    include:
+      - search_schemes
+      - get_state_policy
+    tool_call_timeout: 30
+    reconnect_enabled: true
+    tool_overrides:
+      get_state_policy:
+        alias: india_state_policy_lookup
+        description: "Look up Indian state-level policy and program data."
+
+workflow:
+  _type: react_agent
+  llm_name: nim_llm
+  tool_names:
+    - mcp_public_data</code></pre>
+        </div>
+        <div class="code-wrap">
+          <div class="code-head">bash <button class="copy" onclick="copyCode(this)">Copy</button></div>
+          <pre><code>nat serve --config_file configs/agent_with_mcp.yml --port 8000
+curl -s http://localhost:8000/mcp/client/tool/list | jq</code></pre>
+        </div>
+
+        <h3>A2A server pattern</h3>
+        <p>Use A2A when a workflow should be discoverable as a specialist agent by other agents.</p>
+        <div class="code-wrap">
+          <div class="code-head">bash <button class="copy" onclick="copyCode(this)">Copy</button></div>
+          <pre><code>uv pip install "nvidia-nat[a2a]"
+
+nat a2a serve \
+  --config_file configs/invoice_agent.yml \
+  --host 0.0.0.0 \
+  --port 10000</code></pre>
+        </div>
+        <div class="code-wrap">
+          <div class="code-head">bash <button class="copy" onclick="copyCode(this)">Copy</button></div>
+          <pre><code># From another terminal or another agent environment:
+nat a2a client discover --url http://localhost:10000
+nat a2a client get_skills --url http://localhost:10000
+nat a2a client call \
+  --url http://localhost:10000 \
+  --message "Summarize incorporation steps for a DPIIT-recognized startup."</code></pre>
+        </div>
+
+        <h3>Evaluation harness</h3>
+        <div class="code-wrap">
+          <div class="code-head">json <button class="copy" onclick="copyCode(this)">Copy</button></div>
+          <pre><code>[
+  {
+    "input": "Invoice INV-102 has no PO number. What should happen?",
+    "expected": "Flag for manual review or route to exception approval."
+  },
+  {
+    "input": "Vendor is approved and amount is below threshold. What next?",
+    "expected": "Proceed to payment queue after validation."
+  }
+]</code></pre>
+        </div>
+        <div class="code-wrap">
+          <div class="code-head">yaml <button class="copy" onclick="copyCode(this)">Copy</button></div>
+          <pre><code># configs/eval_invoice_agent.yml
+eval:
+  general:
+    output_dir: .tmp/eval_results
+    dataset:
+      _type: json
+      file_path: data/eval/invoice_eval.json
+  evaluators:
+    accuracy:
+      _type: ragas
+      metric: AnswerAccuracy
+      llm_name: nim_llm</code></pre>
+        </div>
+        <div class="code-wrap">
+          <div class="code-head">bash <button class="copy" onclick="copyCode(this)">Copy</button></div>
+          <pre><code>nat eval --config_file configs/eval_invoice_agent.yml</code></pre>
+        </div>
+
+        <h3>Observability and profiling</h3>
+        <p>Every Track A team should inspect traces before demo day. Most agent failures are not model failures; they are retrieval misses, wrong tool choices, bad schemas, retries, or oversized context.</p>
+        <div class="code-wrap">
+          <div class="code-head">yaml <button class="copy" onclick="copyCode(this)">Copy</button></div>
+          <pre><code>general:
+  telemetry:
+    tracing:
+      console:
+        _type: console
+        enabled: true
+      phoenix:
+        _type: phoenix
+        endpoint: http://localhost:6006
+        enabled: ${PHOENIX_ENABLED:-false}</code></pre>
+        </div>
+        <table>
+          <thead>
+            <tr><th>Inspect</th><th>Question to answer</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Tool calls</td><td>Did the agent choose the correct MCP, A2A, or custom tool?</td></tr>
+            <tr><td>Latency</td><td>Which model call or tool call dominates response time?</td></tr>
+            <tr><td>Token usage</td><td>Are retrieved documents or tool outputs too large?</td></tr>
+            <tr><td>Retries</td><td>Are tool argument schemas or output parsers failing?</td></tr>
+            <tr><td>Eval failures</td><td>Is the failure caused by retrieval, reasoning, or prompt design?</td></tr>
+          </tbody>
+        </table>
+
+        <h2 id="a-nemoclaw">NemoClaw For Safe Agent Exploration</h2>
+        <p>NemoClaw is useful when you want to discuss safer execution of always-on coding or automation assistants. It integrates OpenClaw with NVIDIA OpenShell sandboxing concepts.</p>
+        <div class="warning">
+          NemoClaw is alpha software. APIs, configuration schemas, and runtime behavior can change. Do not use it in production environments.
+        </div>
+
+        <div class="code-wrap">
+          <div class="code-head">bash <button class="copy" onclick="copyCode(this)">Copy</button></div>
+          <pre><code># Quickstart pattern from the current NemoClaw docs.
+curl -fsSL https://www.nvidia.com/nemoclaw.sh | bash
+source ~/.bashrc
+
+# Create or connect to a sandboxed assistant.
+nemoclaw hackathon-agent connect
+
+# Check status and logs.
+nemoclaw hackathon-agent status
+nemoclaw hackathon-agent logs --follow</code></pre>
+        </div>
+
+        <h3>NemoClaw discussion checklist</h3>
+        <table>
+          <thead>
+            <tr><th>Concern</th><th>What to show in your architecture</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Network egress</td><td>Which domains or APIs the agent can call, and which are blocked.</td></tr>
+            <tr><td>Credentials</td><td>How secrets are isolated from prompts, logs, and agent memory.</td></tr>
+            <tr><td>Filesystem</td><td>Which project paths the agent can read/write.</td></tr>
+            <tr><td>Human control</td><td>Where approvals, logs, or policy gates are surfaced.</td></tr>
+          </tbody>
+        </table>
+
+        <h3>Track A capstone templates</h3>
+        <table>
+          <thead>
+            <tr><th>Template</th><th>Suggested stack</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Startup Compliance Agent</td><td>NAT ReAct agent, MCP tax/policy tools, A2A legal-summary specialist, Nemotron via NIM.</td></tr>
+            <tr><td>Bharat Public Services Navigator</td><td>MCP connectors for state and central schemes, multilingual Nemotron answer layer, groundedness eval.</td></tr>
+            <tr><td>Safe Coding Copilot for Indian SaaS Teams</td><td>NemoClaw/OpenShell sandbox, NAT HTTP reviewer, insecure-code evaluation set.</td></tr>
+            <tr><td>Disaster Response Operations Agent</td><td>Router workflow, weather/geospatial MCP tools, A2A logistics agent, trace dashboard.</td></tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section class="panel" id="b">
+        <h2 id="b-bridge">Track B: Model Finetuning and Customisation</h2>
+        <p>Track B teams should be explicit about what model behavior they are changing and why. Your demo should compare base vs customised behavior, not only show that training ran.</p>
+
+        <h3>Track B pipeline</h3>
+        <div class="path">
+          <div><strong>1. Define behavior gap:</strong> What the base model cannot do well enough today.</div>
+          <div><strong>2. Prepare data:</strong> Human data, domain data, or Track C-generated synthetic examples.</div>
+          <div><strong>3. Train:</strong> Use full SFT or LoRA/PEFT through Megatron-Bridge where appropriate.</div>
+          <div><strong>4. Align:</strong> Use NeMo RL for GRPO, DPO, RM, or SFT post-training when reward/preference signals matter.</div>
+          <div><strong>5. Evaluate:</strong> Compare base vs adapted model on held-out prompts.</div>
+        </div>
+
+        <h3>Environment and container</h3>
+        <div class="code-wrap">
+          <div class="code-head">bash <button class="copy" onclick="copyCode(this)">Copy</button></div>
+          <pre><code># Confirm exact container tag from current Megatron-Bridge docs for your model.
+docker run --rm -it \
+  --gpus all \
+  --shm-size=64g \
+  -w /opt/Megatron-Bridge \
+  -v "$PWD:/workspace" \
+  nvcr.io/nvidia/nemo:25.11.nemotron_3_nano \
+  bash
+
+export HF_TOKEN=hf-your-token
+export HF_MODEL_ID=nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B-BF16
+export MEGATRON_MODEL_PATH=/workspace/checkpoints/nemotron3-nano-megatron
+export HF_EXPORT_PATH=/workspace/exports/nemotron3-nano-adapted</code></pre>
+        </div>
+
+        <h3>Convert Hugging Face checkpoint to Megatron</h3>
+        <div class="code-wrap">
+          <div class="code-head">bash <button class="copy" onclick="copyCode(this)">Copy</button></div>
+          <pre><code>python examples/conversion/convert_checkpoints.py import \
+  --hf-model "$HF_MODEL_ID" \
+  --megatron-path "$MEGATRON_MODEL_PATH" \
+  --trust-remote-code</code></pre>
+        </div>
+
+        <h3>LoRA finetuning starter</h3>
+        <div class="code-wrap">
+          <div class="code-head">bash <button class="copy" onclick="copyCode(this)">Copy</button></div>
+          <pre><code># Keep first hackathon runs small. Increase steps only after a smoke test succeeds.
+torchrun --nproc-per-node=8 examples/models/nemotron_3/finetune_nemotron_3_nano.py \
+  --peft lora \
+  train.global_batch_size=128 \
+  train.train_iters=100 \
+  scheduler.lr_warmup_iters=10 \
+  checkpoint.pretrained_checkpoint="$MEGATRON_MODEL_PATH" \
+  checkpoint.save=/workspace/checkpoints/nemotron3-nano-lora</code></pre>
+        </div>
+
+        <h3>Merge LoRA and export for evaluation</h3>
+        <div class="code-wrap">
+          <div class="code-head">bash <button class="copy" onclick="copyCode(this)">Copy</button></div>
+          <pre><code>python examples/peft/merge_lora.py \
+  --hf-model-path "$HF_MODEL_ID" \
+  --lora-checkpoint /workspace/checkpoints/nemotron3-nano-lora/iter_0000100 \
+  --output /workspace/exports/nemotron3-nano-lora-merged
+
+python examples/conversion/convert_checkpoints.py export \
+  --hf-model "$HF_MODEL_ID" \
+  --megatron-path /workspace/checkpoints/nemotron3-nano-lora/iter_0000100 \
+  --hf-path "$HF_EXPORT_PATH"</code></pre>
+        </div>
+
+        <h3>Data format starter for SFT</h3>
+        <div class="code-wrap">
+          <div class="code-head">jsonl <button class="copy" onclick="copyCode(this)">Copy</button></div>
+          <pre><code>{"messages":[{"role":"system","content":"You are a careful finance-domain assistant."},{"role":"user","content":"Explain working capital in simple terms."},{"role":"assistant","content":"Working capital is current assets minus current liabilities..."}],"metadata":{"domain":"finance","source":"curated","license":"internal-approved"}}
+{"messages":[{"role":"system","content":"You are a careful finance-domain assistant."},{"role":"user","content":"What is the risk of negative cash conversion cycle?"},{"role":"assistant","content":"A negative cash conversion cycle can be healthy when supplier terms fund inventory..."}],"metadata":{"domain":"finance","source":"synthetic-reviewed","license":"internal-approved"}}</code></pre>
+        </div>
+
+        <h3 id="b-rl">NeMo RL alignment path</h3>
+        <p>Use NeMo RL when you have preference, reward, or environment feedback signals. Supported post-training paths include GRPO, DPO, reward model training, SFT, DAPO, and on-policy distillation.</p>
+        <div class="code-wrap">
+          <div class="code-head">bash <button class="copy" onclick="copyCode(this)">Copy</button></div>
+          <pre><code>git clone https://github.com/NVIDIA-NeMo/RL.git nemo-rl --recursive
+cd nemo-rl
+git config submodule.recurse true
+
+pip install -U uv
+uv venv
+source .venv/bin/activate
+
+export HF_HOME=/workspace/hf_cache
+export HF_TOKEN=hf-your-token</code></pre>
+        </div>
+
+        <h3>GRPO config skeleton</h3>
+        <div class="code-wrap">
+          <div class="code-head">yaml <button class="copy" onclick="copyCode(this)">Copy</button></div>
+          <pre><code># configs/grpo_domain.yaml
+grpo:
+  num_prompts_per_step: 32
+  num_generations_per_prompt: 4
+  max_num_steps: 200
+  val_period: 10
+  normalize_rewards: true
+
+loss_fn:
+  reference_policy_kl_penalty: 0.01
+  ratio_clip_min: 0.2
+  ratio_clip_max: 0.28
+
+policy:
+  model_name: /workspace/exports/nemotron3-nano-adapted
+  train_global_batch_size: 128
+  train_micro_batch_size: 1
+  precision: bfloat16
+  generation:
+    backend: vllm
+    temperature: 1.0
+
+data:
+  train:
+    data_path: /workspace/data/train.jsonl
+  validation:
+    data_path: /workspace/data/val.jsonl
+
+logger:
+  log_dir: logs
+  tensorboard_enabled: true
+  wandb_enabled: false
+
+cluster:
+  gpus_per_node: 8
+  num_nodes: 1</code></pre>
+        </div>
+
+        <h3>Run and monitor</h3>
+        <div class="code-wrap">
+          <div class="code-head">bash <button class="copy" onclick="copyCode(this)">Copy</button></div>
+          <pre><code>uv run python examples/run_grpo.py --config configs/grpo_domain.yaml
+
+tensorboard --logdir=./logs --port=6006</code></pre>
+        </div>
+
+        <h3>Custom reward environment pattern</h3>
+        <p>Use a custom reward environment when correctness is more than string matching. For India-domain assistants, useful reward axes include groundedness, no fake citations, language fit, and refusal behavior.</p>
+        <div class="code-wrap">
+          <div class="code-head">python <button class="copy" onclick="copyCode(this)">Copy</button></div>
+          <pre><code>import re
+import torch
+import ray
+from nemo_rl.environments.interfaces import EnvironmentInterface, EnvironmentReturn
+
+@ray.remote(max_restarts=-1, max_task_retries=-1)
+class IndiaPolicyRewardEnv(EnvironmentInterface):
+    def __init__(self, cfg):
+        self.required_terms = cfg.get("required_terms", [])
+
+    def step(self, message_log_batch, metadata):
+        responses = [
+            "".join(str(m["content"]) for m in conv if m["role"] == "assistant")
+            for conv in message_log_batch
+        ]
+
+        scores = []
+        for text, meta in zip(responses, metadata):
+            grounded = float(any(t.lower() in text.lower() for t in self.required_terms))
+            no_fake_section = float(
+                not re.search(r"Section\s+\d+[A-Z]?", text)
+                or meta.get("allow_sections", False)
+            )
+            lang_ok = float(meta.get("target_lang", "en") in ["en", "hi", "ta", "te"] or len(text) > 0)
+            scores.append([grounded, no_fake_section, lang_ok])
+
+        return EnvironmentReturn(
+            observations=[{"role": "environment", "content": ""} for _ in responses],
+            metadata=metadata,
+            next_stop_strings=[None] * len(responses),
+            rewards=torch.tensor(scores, dtype=torch.float32),
+            terminateds=torch.ones(len(responses)),
+            answers=None,
+        )</code></pre>
+        </div>
+
+        <h3>DPO and reward model patterns</h3>
+        <p>Use DPO when your team has pairwise preference examples and wants alignment without online reward rollouts. Use reward model training when you want a reusable scorer for later RL or evaluation.</p>
+        <div class="code-wrap">
+          <div class="code-head">jsonl <button class="copy" onclick="copyCode(this)">Copy</button></div>
+          <pre><code>{"context":[{"role":"user","content":"Explain DigiLocker KYC limits."}],"completions":[{"rank":0,"completion":[{"role":"assistant","content":"A careful answer with caveats and no unsupported legal claim."}]},{"rank":1,"completion":[{"role":"assistant","content":"An overconfident answer with made-up section numbers."}]}],"task_name":"india_policy"}</code></pre>
+        </div>
+        <div class="code-wrap">
+          <div class="code-head">bash <button class="copy" onclick="copyCode(this)">Copy</button></div>
+          <pre><code># DPO pattern. Confirm exact example paths in your checked-out NeMo RL version.
+uv run python examples/run_dpo.py --config examples/configs/dpo.yaml \
+  policy.model_name=./exports/india_hf \
+  dpo.sft_loss_weight=0.1
+
+# Reward model pattern.
+uv run python examples/run_rm.py --config examples/configs/rm.yaml \
+  policy.model_name=./exports/india_hf</code></pre>
+        </div>
+
+        <h3>Track B evaluation table</h3>
+        <table>
+          <thead>
+            <tr><th>Metric</th><th>How to compute</th><th>Why judges care</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Domain correctness</td><td>Expert rubric or LLM-as-judge over held-out prompts.</td><td>Shows behavior changed in the intended direction.</td></tr>
+            <tr><td>Format compliance</td><td>Regex or parser validation for required answer schema.</td><td>Important for enterprise workflows and agents.</td></tr>
+            <tr><td>Safety/regression</td><td>Base safety prompts plus refusal/grounding checks.</td><td>Shows customisation did not break guardrails.</td></tr>
+            <tr><td>Latency/cost</td><td>Tokens/sec, response latency, GPU utilization.</td><td>Shows a practical deployment path.</td></tr>
+          </tbody>
+        </table>
+
+        <h3>India-specific evaluation prompts</h3>
+        <ul>
+          <li>GST, MSME, UPI, Aadhaar, DigiLocker, agriculture support, skilling, and public-service navigation tasks.</li>
+          <li>Code-mixed Hindi-English prompts and at least two regional-language samples if your project claims multilingual support.</li>
+          <li>Legal, medical, and financial prompts that require cautious wording and escalation rather than overconfident advice.</li>
+          <li>Held-out examples that never appear in SFT, preference, or reward model training data.</li>
+        </ul>
+      </section>
+
+      <section class="panel" id="c">
+        <h2 id="c-designer">Track C: Synthetic Data Generation</h2>
+        <p>Track C teams should show the complete data factory: schema, generation, validation, curation, export, and quality report. A pile of generated examples is not enough.</p>
+
+        <h3>Track C pipeline</h3>
+        <div class="code-wrap">
+          <div class="code-head">text <button class="copy" onclick="copyCode(this)">Copy</button></div>
+          <pre><code>Data objective
+  -> Schema and sampling plan
+  -> Nemotron generation through hosted NIM, local NIM, or vLLM
+  -> Deterministic validators
+  -> LLM-as-judge scoring
+  -> NeMo Curator filtering and deduplication
+  -> JSONL / Parquet export
+  -> Quality report and examples</code></pre>
+        </div>
+
+        <h3>Strong India SDG domains</h3>
+        <table>
+          <thead>
+            <tr><th>Domain</th><th>Example synthetic records</th><th>Safety note</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Agriculture</td><td>Pest triage, mandi price explanation, subsidy navigation.</td><td>Escalate crop disease diagnosis and avoid fabricated government scheme details.</td></tr>
+            <tr><td>Health</td><td>ASHA worker counseling, appointment navigation, maternal warning signs.</td><td>Never replace clinical diagnosis; include escalation for red flags.</td></tr>
+            <tr><td>Disaster response</td><td>Flood shelter routing, relief inventory requests, missing-resource escalation.</td><td>Prefer verified sources and uncertainty notes.</td></tr>
+            <tr><td>Education and skilling</td><td>ITI course guidance, interview practice, scheme matching.</td><td>Keep advice local, accessible, and non-discriminatory.</td></tr>
+            <tr><td>Public services</td><td>Document checklist, multilingual form help, grievance routing.</td><td>Do not request or generate real PII.</td></tr>
+          </tbody>
+        </table>
+
+        <h3>Install base packages</h3>
+        <div class="code-wrap">
+          <div class="code-head">bash <button class="copy" onclick="copyCode(this)">Copy</button></div>
+          <pre><code>mkdir track-c-sdg
+cd track-c-sdg
+python3 -m venv .venv
+source .venv/bin/activate
+
+pip install -U openai python-dotenv pandas pyarrow pydantic rich
+pip install -U data-designer
+
+export NVIDIA_API_KEY=nvapi-your-key
+export NIM_BASE_URL=https://integrate.api.nvidia.com/v1</code></pre>
+        </div>
+
+        <h3>Data Designer SDK-style schema</h3>
+        <p>This mirrors the Korea guide pattern: define model config, sampler columns, LLM-generated columns, structured columns, validators, judges, preview, then create. Confirm exact class names against the Data Designer version you install.</p>
+        <div class="code-wrap">
+          <div class="code-head">python <button class="copy" onclick="copyCode(this)">Copy</button></div>
+          <pre><code>import data_designer.config as dd
+from data_designer.interface import DataDesigner
+
+model_configs = [
+    dd.ModelConfig(
+        provider="default/nvidia-build",
+        model="nvidia/nemotron-3-nano-30b-a3b",
+        alias="nemotron",
+    )
+]
+
+builder = dd.DataDesignerConfigBuilder(model_configs=model_configs)
+
+builder.add_column(dd.SamplerColumnConfig(
+    name="sdg_domain",
+    sampler_type=dd.SamplerType.CATEGORY,
+    params=dd.CategorySamplerParams(
+        values=[
+            "agriculture advisory",
+            "maternal health navigation",
+            "disaster relief coordination",
+            "skills and employment guidance",
+            "citizen service navigation",
+        ],
+        weights=[0.25, 0.20, 0.20, 0.20, 0.15],
+    ),
+))
+
+builder.add_column(dd.SamplerColumnConfig(
+    name="language",
+    sampler_type=dd.SamplerType.CATEGORY,
+    params=dd.CategorySamplerParams(
+        values=["Hindi", "English", "Tamil", "Telugu", "Bengali", "Marathi", "Kannada"],
+    ),
+))
+
+builder.add_column(dd.SamplerColumnConfig(
+    name="user_profile",
+    sampler_type=dd.SamplerType.CATEGORY,
+    params=dd.CategorySamplerParams(
+        values=[
+            "rural first-time smartphone user",
+            "urban student",
+            "field health worker",
+            "small business owner",
+            "district officer",
+        ],
+    ),
+))</code></pre>
+        </div>
+
+        <h3>User request generation column</h3>
+        <div class="code-wrap">
+          <div class="code-head">python <button class="copy" onclick="copyCode(this)">Copy</button></div>
+          <pre><code>builder.add_column(dd.LLMTextColumnConfig(
+    name="user_request",
+    model_alias="nemotron",
+    prompt="""
+Create one realistic user request for an India SDG assistant.
+
+Domain: {{ sdg_domain }}
+Language: {{ language }}
+User profile: {{ user_profile }}
+
+Requirements:
+- Use natural phrasing for the selected language.
+- Include concrete local constraints.
+- Do not include personally identifiable information.
+- Make the request useful for training an agent, not a generic chatbot.
+""",
+))</code></pre>
+        </div>
+
+        <h3>Schema-driven agent trace</h3>
+        <div class="code-wrap">
+          <div class="code-head">python <button class="copy" onclick="copyCode(this)">Copy</button></div>
+          <pre><code>agent_trace_schema = {
+    "type": "object",
+    "properties": {
+        "intent": {"type": "string"},
+        "constraints": {"type": "array", "items": {"type": "string"}},
+        "plan": {"type": "array", "items": {"type": "string"}},
+        "tool_calls": {
+            "type": "array",
+            "items": {
+                "type": "object",
+                "properties": {
+                    "tool_name": {"type": "string"},
+                    "arguments": {"type": "object"},
+                    "expected_observation": {"type": "string"},
+                },
+                "required": ["tool_name", "arguments", "expected_observation"],
+            },
+        },
+        "risk_flags": {"type": "array", "items": {"type": "string"}},
+    },
+    "required": ["intent", "constraints", "plan", "tool_calls", "risk_flags"],
+}
+
+builder.add_column(dd.LLMStructuredColumnConfig(
+    name="agent_trace",
+    model_alias="nemotron",
+    prompt="""
+Given the user request below, create a structured agent execution trace.
+
+User request:
+{{ user_request }}
+
+The trace should show how a responsible agent would use tools, constraints,
+risks, and next steps for the selected India SDG domain.
+""",
+    schema=agent_trace_schema,
+))</code></pre>
+        </div>
+
+        <h3>Validation and LLM-as-judge columns</h3>
+        <div class="code-wrap">
+          <div class="code-head">python <button class="copy" onclick="copyCode(this)">Copy</button></div>
+          <pre><code>def validate_trace(row):
+    trace = row["agent_trace"]
+    if not trace.get("plan"):
+        return False
+    if "medical diagnosis" in str(trace).lower():
+        return False
+    if len(trace.get("tool_calls", [])) > 4:
+        return False
+    return True
+
+builder.add_column(dd.ValidationColumnConfig(
+    name="trace_valid",
+    validator_type=dd.ValidatorType.PYTHON,
+    params={"function": validate_trace},
+    required_columns=["agent_trace"],
+))
+
+builder.add_column(dd.LLMJudgeColumnConfig(
+    name="quality_judge",
+    model_alias="nemotron",
+    prompt="""
+Evaluate this synthetic agent training record.
+
+Domain: {{ sdg_domain }}
+Language: {{ language }}
+User: {{ user_request }}
+Trace: {{ agent_trace }}
+
+Score strictly. Penalize unsafe advice, vague plans, invalid tool use,
+poor local relevance, and language mismatch.
+""",
+    scores=[
+        dd.Score(name="local_relevance", description="Does this fit the Indian SDG context?", options={1: "poor", 3: "acceptable", 5: "excellent"}),
+        dd.Score(name="tool_use_quality", description="Are tool calls plausible and useful?", options={1: "bad", 3: "usable", 5: "strong"}),
+        dd.Score(name="safety", description="Does it avoid harmful or overconfident guidance?", options={1: "unsafe", 3: "minor issues", 5: "safe"}),
+        dd.Score(name="language_quality", description="Is the selected language fluent and natural?", options={1: "poor", 3: "okay", 5: "native-like"}),
+    ],
+))</code></pre>
+        </div>
+
+        <h3>Preview and create</h3>
+        <div class="code-wrap">
+          <div class="code-head">python <button class="copy" onclick="copyCode(this)">Copy</button></div>
+          <pre><code>data_designer = DataDesigner()
+
+data_designer.validate(builder)
+
+preview = data_designer.preview(config_builder=builder, num_records=5)
+preview.display_sample_record(index=0)
+
+results = data_designer.create(
+    config_builder=builder,
+    num_records=500,
+    dataset_name="india-sdg-agentic-synthetic-v1",
+)
+
+df = results.load_dataset()</code></pre>
+        </div>
+
+        <h3>Schema-first generation starter</h3>
+        <p>The exact Data Designer APIs can evolve, so treat this as the shape to reproduce: samplers define distributions, LLM columns generate dependent fields, structured columns extract metadata, judge columns score quality, and expression/validation columns produce final training records.</p>
+        <div class="code-wrap">
+          <div class="code-head">python <button class="copy" onclick="copyCode(this)">Copy</button></div>
+          <pre><code># notebooks/sdg_multilingual_support.py
+import os
+import json
+import random
+from openai import OpenAI
+from pydantic import BaseModel, Field
+
+client = OpenAI(
+    base_url=os.getenv("NIM_BASE_URL", "https://integrate.api.nvidia.com/v1"),
+    api_key=os.environ["NVIDIA_API_KEY"],
+)
+MODEL = "nvidia/nemotron-3-nano-30b-a3b"
+
+class ConversationMeta(BaseModel):
+    language: str
+    domain: str
+    intent: str
+    difficulty: str
+    safety_risk: str = Field(description="none, low, medium, high")
+
+LANGUAGES = ["Hindi", "English", "Tamil", "Telugu", "Bengali", "Marathi"]
+DOMAINS = ["banking", "healthcare", "telecom", "travel", "education"]
+INTENTS = ["complaint", "question", "refund", "troubleshooting", "appointment"]
+
+def sample_seed():
+    return {
+        "language": random.choice(LANGUAGES),
+        "domain": random.choice(DOMAINS),
+        "intent": random.choice(INTENTS),
+        "difficulty": random.choice(["easy", "medium", "hard"]),
+    }
+
+def generate_conversation(seed):
+    prompt = f"""
+Create a realistic multilingual customer support conversation.
+Language: {seed["language"]}
+Domain: {seed["domain"]}
+Intent: {seed["intent"]}
+Difficulty: {seed["difficulty"]}
+
+Return exactly 6 to 10 turns as JSON:
+{{"messages":[{{"role":"user","content":"..."}},{{"role":"assistant","content":"..."}}]}}
+"""
+    response = client.chat.completions.create(
+        model=MODEL,
+        messages=[{"role": "user", "content": prompt}],
+        temperature=0.7,
+        max_tokens=1200,
+        response_format={"type": "json_object"},
+    )
+    return json.loads(response.choices[0].message.content)
+
+def judge_record(seed, conversation):
+    rubric = f"""
+Score this synthetic conversation from 1 to 5 on:
+1. language_quality
+2. domain_relevance
+3. assistant_helpfulness
+4. safety
+
+Return JSON with integer scores and a short reason.
+Seed: {json.dumps(seed)}
+Conversation: {json.dumps(conversation, ensure_ascii=False)}
+"""
+    response = client.chat.completions.create(
+        model=MODEL,
+        messages=[{"role": "user", "content": rubric}],
+        temperature=0,
+        max_tokens=600,
+        response_format={"type": "json_object"},
+    )
+    return json.loads(response.choices[0].message.content)
+
+records = []
+for i in range(20):
+    seed = sample_seed()
+    conversation = generate_conversation(seed)
+    scores = judge_record(seed, conversation)
+    records.append({"id": i, "seed": seed, "conversation": conversation, "scores": scores})
+
+with open("synthetic_support_conversations.jsonl", "w", encoding="utf-8") as f:
+    for record in records:
+        f.write(json.dumps(record, ensure_ascii=False) + "\n")</code></pre>
+        </div>
+
+        <h3>Validation functions</h3>
+        <div class="code-wrap">
+          <div class="code-head">python <button class="copy" onclick="copyCode(this)">Copy</button></div>
+          <pre><code>def has_min_turns(record, min_turns=6):
+    return len(record["conversation"].get("messages", [])) &gt;= min_turns
+
+def alternates_roles(record):
+    roles = [m.get("role") for m in record["conversation"].get("messages", [])]
+    return all(role in {"user", "assistant"} for role in roles)
+
+def score_value(record, key, threshold=3):
+    value = record.get("scores", {}).get(key)
+    if isinstance(value, dict):
+        value = value.get("score")
+    try:
+        return int(value) &gt;= threshold
+    except Exception:
+        return False
+
+def keep(record):
+    return (
+        has_min_turns(record)
+        and alternates_roles(record)
+        and score_value(record, "language_quality")
+        and score_value(record, "domain_relevance")
+        and score_value(record, "assistant_helpfulness")
+        and score_value(record, "safety")
+    )
+
+filtered = [r for r in records if keep(r)]
+print(f"Kept {len(filtered)} / {len(records)} records")</code></pre>
+        </div>
+
+        <h3>Export for SFT</h3>
+        <div class="code-wrap">
+          <div class="code-head">python <button class="copy" onclick="copyCode(this)">Copy</button></div>
+          <pre><code>with open("support_sft.jsonl", "w", encoding="utf-8") as f:
+    for record in filtered:
+        out = {
+            "messages": [
+                {"role": "system", "content": "You are a helpful multilingual customer support assistant."},
+                *record["conversation"]["messages"],
+            ],
+            "metadata": {
+                **record["seed"],
+                "scores": record["scores"],
+                "source": "synthetic-nemotron",
+            },
+        }
+        f.write(json.dumps(out, ensure_ascii=False) + "\n")</code></pre>
+        </div>
+
+        <h2 id="c-curator">NeMo Curator Post-Processing</h2>
+        <p>Use Curator when the dataset becomes large enough that manual inspection is no longer enough. Curator supports text loading, filtering, quality scoring, exact/fuzzy/semantic deduplication, and synthetic data generation workflows that can connect to OpenAI-compatible endpoints.</p>
+
+        <h3>Install Curator</h3>
+        <div class="code-wrap">
+          <div class="code-head">bash <button class="copy" onclick="copyCode(this)">Copy</button></div>
+          <pre><code># Choose extras based on your environment and CUDA version.
+pip install -U nemo-curator
+
+# For GPU-accelerated text curation on CUDA 12 environments, confirm the latest extra name in docs:
+pip install --extra-index-url https://pypi.nvidia.com "nemo-curator[text_cuda12]"</code></pre>
+        </div>
+
+        <h3>Prepare Parquet for curation</h3>
+        <div class="code-wrap">
+          <div class="code-head">python <button class="copy" onclick="copyCode(this)">Copy</button></div>
+          <pre><code>import json
+import pandas as pd
+
+rows = []
+with open("support_sft.jsonl", encoding="utf-8") as f:
+    for idx, line in enumerate(f):
+        item = json.loads(line)
+        text = "\n".join(m["content"] for m in item["messages"])
+        rows.append({"id": idx, "text": text, "metadata": item.get("metadata", {})})
+
+df = pd.DataFrame(rows)
+df.to_parquet("support_sft_for_curator.parquet", index=False)</code></pre>
+        </div>
+
+        <h3>Deduplication decision guide</h3>
+        <table>
+          <thead>
+            <tr><th>Problem</th><th>Method</th><th>Use when</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Exact repeated rows</td><td>Exact hash matching</td><td>Generated output repeats identical conversations.</td></tr>
+            <tr><td>Small edits or paraphrases</td><td>Fuzzy MinHash + LSH</td><td>Templates produce near duplicates with minor wording changes.</td></tr>
+            <tr><td>Meaning-level duplicates</td><td>Semantic embeddings</td><td>Different text says the same thing across languages or styles.</td></tr>
+          </tbody>
+        </table>
+
+        <h3>Curator-style pipeline sketch</h3>
+        <div class="code-wrap">
+          <div class="code-head">python <button class="copy" onclick="copyCode(this)">Copy</button></div>
+          <pre><code># API names can vary across Curator releases. Use this as an implementation sketch.
+from nemo_curator.pipeline import Pipeline
+from nemo_curator.stages.text.io.reader.parquet import ParquetReader
+from nemo_curator.stages.text.io.writer.parquet import ParquetWriter
+from nemo_curator.stages.text.modules.score_filter import Filter
+
+pipeline = Pipeline(name="support_sft_cleanup")
+pipeline.add_stage(ParquetReader(file_paths="support_sft_for_curator.parquet"))
+
+# Drop very short records.
+pipeline.add_stage(
+    Filter(
+        filter_fn=lambda text: len(text) &gt;= 400,
+        filter_field="text",
+    )
+)
+
+# Add exact/fuzzy/semantic deduplication stages based on your installed Curator version.
+
+pipeline.add_stage(ParquetWriter(path="curated_support_sft.parquet"))</code></pre>
+        </div>
+
+        <h3>Quality report template</h3>
+        <div class="code-wrap">
+          <div class="code-head">markdown <button class="copy" onclick="copyCode(this)">Copy</button></div>
+          <pre><code># Synthetic Dataset Quality Report
+
+Dataset: support_sft.jsonl
+Generator model: nvidia/nemotron-3-nano-30b-a3b
+Records generated: 2,000
+Records kept after validation: 1,420
+Duplicate removal: exact + fuzzy
+Languages: Hindi, English, Tamil, Telugu, Bengali, Marathi
+Average LLM judge score: 4.1 / 5
+
+Known limitations:
+- Synthetic conversations still need human spot checks.
+- Domain policies are examples, not legal or medical advice.
+- Low-resource language quality should be reviewed by native speakers.</code></pre>
+        </div>
+      </section>
+
+      <section class="panel" id="checklists">
+        <h2 id="final-checklist">Know-Before-You-Go Checklist</h2>
+        <div class="grid two">
+          <article class="card">
+            <h3>Team readiness</h3>
+            <ul>
+              <li>Primary contact and all team members confirmed.</li>
+              <li>At least three active participants for hackathon work.</li>
+              <li>At least two members available in Bangalore for final days if shortlisted.</li>
+              <li>Repository has README, license, and setup instructions.</li>
+              <li>Demo owner and pitch owner assigned.</li>
+            </ul>
+          </article>
+          <article class="card">
+            <h3>Technical readiness</h3>
+            <ul>
+              <li>NVIDIA API key created and stored outside git.</li>
+              <li>Hosted NIM smoke test completed.</li>
+              <li>Dataset sample or workflow fixture prepared.</li>
+              <li>Evaluation prompts or metrics defined.</li>
+              <li>Fallback demo path works without full training or full integration.</li>
+            </ul>
+          </article>
+        </div>
+
+        <h2>Track-Specific Deliverables</h2>
+        <table>
+          <thead>
+            <tr><th>Track</th><th>Minimum technical artifact</th><th>Stretch artifact</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>A</td><td>Runnable agent workflow with at least one real tool call.</td><td>MCP/A2A exposure plus eval traces and NemoClaw safety discussion.</td></tr>
+            <tr><td>B</td><td>Base vs adapted model comparison on held-out prompts.</td><td>LoRA/SFT plus NeMo RL alignment or reward model experiment.</td></tr>
+            <tr><td>C</td><td>Generated dataset with schema, validation, and export format.</td><td>Curator dedup/filter pipeline plus quality report and downstream eval.</td></tr>
+          </tbody>
+        </table>
+
+        <h2>Demo Script Template</h2>
+        <div class="code-wrap">
+          <div class="code-head">markdown <button class="copy" onclick="copyCode(this)">Copy</button></div>
+          <pre><code># Demo Script
+
+1. Problem
+   - Who has this problem?
+   - What is painful today?
+
+2. NVIDIA stack
+   - Model:
+   - Runtime:
+   - NeMo tools:
+   - Data/training path:
+
+3. Live demo path
+   - Input:
+   - Intermediate tool/model/data step:
+   - Output:
+
+4. Evaluation
+   - Metric:
+   - Baseline:
+   - Result:
+
+5. Next step
+   - What would productionize this?</code></pre>
+        </div>
+      </section>
+
+      <section class="panel" id="links">
+        <h2>Official NVIDIA and Project Links</h2>
+        <table>
+          <thead>
+            <tr><th>Area</th><th>Resource</th><th>Link</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Accounts</td><td>NVIDIA Developer</td><td><a href="https://developer.nvidia.com/" target="_blank" rel="noreferrer">developer.nvidia.com</a></td></tr>
+            <tr><td>Hosted APIs</td><td>NVIDIA API Catalog</td><td><a href="https://build.nvidia.com/explore/discover" target="_blank" rel="noreferrer">build.nvidia.com</a></td></tr>
+            <tr><td>NIM</td><td>NVIDIA NIM docs</td><td><a href="https://docs.nvidia.com/nim/" target="_blank" rel="noreferrer">docs.nvidia.com/nim</a></td></tr>
+            <tr><td>NIM API</td><td>NIM LLM API reference</td><td><a href="https://docs.nvidia.com/nim/large-language-models/latest/reference/api-reference.html" target="_blank" rel="noreferrer">NIM LLM API reference</a></td></tr>
+            <tr><td>Model</td><td>Nemotron 3 Nano</td><td><a href="https://build.nvidia.com/nvidia/nemotron-3-nano-30b-a3b/systemcard" target="_blank" rel="noreferrer">Nemotron 3 Nano on build.nvidia.com</a></td></tr>
+            <tr><td>Track A</td><td>NeMo Agent Toolkit docs</td><td><a href="https://docs.nvidia.com/nemo/agent-toolkit/" target="_blank" rel="noreferrer">docs.nvidia.com/nemo/agent-toolkit</a></td></tr>
+            <tr><td>Track A</td><td>NeMo Agent Toolkit GitHub</td><td><a href="https://github.com/NVIDIA/NeMo-Agent-Toolkit" target="_blank" rel="noreferrer">github.com/NVIDIA/NeMo-Agent-Toolkit</a></td></tr>
+            <tr><td>Track A</td><td>NemoClaw docs</td><td><a href="https://docs.nvidia.com/nemoclaw/latest/index.html" target="_blank" rel="noreferrer">docs.nvidia.com/nemoclaw</a></td></tr>
+            <tr><td>Track B</td><td>Megatron-Bridge docs</td><td><a href="https://docs.nvidia.com/nemo/megatron-bridge/latest/" target="_blank" rel="noreferrer">docs.nvidia.com/nemo/megatron-bridge</a></td></tr>
+            <tr><td>Track B</td><td>Nemotron 3 Nano Megatron-Bridge guide</td><td><a href="https://docs.nvidia.com/nemo/megatron-bridge/latest/models/llm/nemotron3.html" target="_blank" rel="noreferrer">Nemotron 3 Nano guide</a></td></tr>
+            <tr><td>Track B</td><td>NeMo RL docs</td><td><a href="https://docs.nvidia.com/nemo/rl/latest/index.html" target="_blank" rel="noreferrer">docs.nvidia.com/nemo/rl</a></td></tr>
+            <tr><td>Track C</td><td>NeMo Data Designer GitHub</td><td><a href="https://github.com/NVIDIA-NeMo/DataDesigner" target="_blank" rel="noreferrer">github.com/NVIDIA-NeMo/DataDesigner</a></td></tr>
+            <tr><td>Track C</td><td>NeMo Curator docs</td><td><a href="https://docs.nvidia.com/nemo/curator/latest/about/index.html" target="_blank" rel="noreferrer">docs.nvidia.com/nemo/curator</a></td></tr>
+            <tr><td>Track C</td><td>Curator synthetic data generation</td><td><a href="https://docs.nvidia.com/nemo/curator/curate-text/synthetic" target="_blank" rel="noreferrer">Curator SDG docs</a></td></tr>
+          </tbody>
+        </table>
+
+        <h2>Glossary</h2>
+        <table>
+          <thead>
+            <tr><th>Term</th><th>Meaning</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>NIM</td><td>NVIDIA NIM, inference microservices for optimized model serving.</td></tr>
+            <tr><td>NGC</td><td>NVIDIA catalog and registry for containers, models, and software assets.</td></tr>
+            <tr><td>MCP</td><td>Model Context Protocol for connecting agents to tools and context sources.</td></tr>
+            <tr><td>A2A</td><td>Agent-to-Agent protocol for exposing and calling specialist agents.</td></tr>
+            <tr><td>SFT</td><td>Supervised finetuning using instruction/response examples.</td></tr>
+            <tr><td>LoRA/PEFT</td><td>Parameter-efficient methods for adapting a model without updating all weights.</td></tr>
+            <tr><td>GRPO</td><td>A reinforcement learning algorithm used in post-training workflows.</td></tr>
+            <tr><td>LLM-as-judge</td><td>Using a language model to score generated outputs against a rubric.</td></tr>
+          </tbody>
+        </table>
+      </section>
+    </main>
+  </div>
+
+  <footer>
+    <div class="wrap">
+      Prepared for the India Agentic AI Open Hackathon workshop. Verify commands against the linked official documentation before running on shared or production infrastructure.
+    </div>
+  </footer>
+
+  <script>
+    const tabs = document.querySelectorAll(".tab");
+    const panels = document.querySelectorAll(".panel");
+    tabs.forEach((tab) => {
+      tab.addEventListener("click", () => {
+        tabs.forEach((item) => item.classList.remove("active"));
+        panels.forEach((panel) => panel.classList.remove("active"));
+        tab.classList.add("active");
+        document.getElementById(tab.dataset.tab).classList.add("active");
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      });
+    });
+
+    function copyCode(button) {
+      const code = button.closest(".code-wrap").querySelector("pre").innerText;
+      navigator.clipboard.writeText(code).then(() => {
+        const original = button.innerText;
+        button.innerText = "Copied";
+        setTimeout(() => { button.innerText = original; }, 1200);
+      });
+    }
+  </script>
+</body>
+</html>
