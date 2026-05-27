@@ -364,7 +364,7 @@
     <div class="wrap">
       <span class="badge">Know-Before-You-Go</span>
       <h1>India Agentic AI Open Hackathon Technical Guide</h1>
-      <p class="subtitle">A developer-facing starter repo in document form. Use it before the workshop and hackathon to set up accounts, choose the right NVIDIA path, copy starter configs, and arrive ready to build.</p>
+      <p class="subtitle">A hands-on technical companion for workshop participants. Use it during the workshop and hackathon to choose the right NVIDIA path, copy starter configs, connect SDKs, and turn your project idea into a working demo.</p>
       <div class="meta">
         <span class="pill">For eligible applicants and developer teams</span>
         <span class="pill">No hands-on workshop required</span>
@@ -391,6 +391,7 @@
       <a href="#overview-goal">How to use this guide</a>
       <a href="#overview-track-map">Track selection map</a>
       <a href="#nim-setup">NIM setup</a>
+      <a href="#nim-skills">NVIDIA Skills</a>
       <a href="#nim-chat">Chat API starter</a>
       <a href="#nim-tools">Tool calling</a>
       <a href="#a-nat">NeMo Agent Toolkit</a>
@@ -398,6 +399,7 @@
       <a href="#b-bridge">Megatron-Bridge</a>
       <a href="#b-rl">NeMo RL</a>
       <a href="#c-designer">Data Designer</a>
+      <a href="#c-personas-india">India personas</a>
       <a href="#c-curator">Curator</a>
       <a href="#final-checklist">Final checklist</a>
     </aside>
@@ -406,17 +408,18 @@
       <section class="panel active" id="overview">
         <h2 id="overview-goal">How To Use This Guide</h2>
         <div class="lead">
-          This guide is intentionally more technical than the public workshop agenda. It is the companion material developers should use to prepare their machines, teams, repositories, and technical plan before the hackathon build days.
+          This guide is intentionally more technical than the public workshop agenda. Use it as the developer companion during the workshop to set up your stack, pick a track, reuse starter snippets, and shape a build plan for the hackathon days.
         </div>
 
         <div class="grid">
           <article class="card">
-            <h3>Before the workshop</h3>
+            <h3>Workshop setup</h3>
             <ul>
               <li>Create NVIDIA Developer, build.nvidia.com, NGC, and Hugging Face accounts if needed.</li>
               <li>Read the common NIM + Nemotron section.</li>
+              <li>List the NVIDIA verified agent skills and install the skills relevant to your track.</li>
               <li>Pick a primary track and one backup track.</li>
-              <li>Bring one architecture sketch and one technical blocker question.</li>
+              <li>Capture one architecture sketch and one technical blocker question.</li>
             </ul>
           </article>
           <article class="card">
@@ -453,7 +456,7 @@
             <tr>
               <td>Connecting tools, APIs, documents, agents, and workflows into a working assistant or automation service.</td>
               <td>Track A: Agentic Workflows</td>
-              <td>Nemotron, NIM, NeMo Agent Toolkit, MCP, A2A, optional NemoClaw.</td>
+              <td>Nemotron, NIM, NVIDIA Agent Skills, NeMo Agent Toolkit, MCP, A2A, optional NemoClaw.</td>
               <td>A traced workflow with tool calls, result synthesis, and at least one reliability/evaluation metric.</td>
             </tr>
             <tr>
@@ -465,7 +468,7 @@
             <tr>
               <td>Creating structured, high-quality training or evaluation data for low-resource, domain, or agentic tasks.</td>
               <td>Track C: Synthetic Data Generation</td>
-              <td>Nemotron, NeMo Data Designer, NeMo Curator, LLM-as-judge, validators.</td>
+              <td>Nemotron, Nemotron-Personas-India, NeMo Data Designer, NeMo Curator, LLM-as-judge, validators.</td>
               <td>A generated dataset sample plus quality filters, deduplication, and export format.</td>
             </tr>
           </tbody>
@@ -582,6 +585,54 @@ EOF
 
 cp .env.example .env
 echo ".env" &gt;&gt; .gitignore</code></pre>
+        </div>
+
+        <h3 id="nim-skills">NVIDIA Verified Agent Skills</h3>
+        <p>NVIDIA Agent Skills are portable instruction sets that help coding agents use NVIDIA CUDA-X libraries, AI Blueprints, and platform tools correctly. Use them when you want your agentic coding assistant to follow product-specific NVIDIA patterns instead of relying only on generic model knowledge.</p>
+        <div class="grid two">
+          <article class="card">
+            <h3>Browse and install</h3>
+            <ol>
+              <li>Browse the public catalog at <a href="https://github.com/NVIDIA/skills" target="_blank" rel="noreferrer">github.com/NVIDIA/skills</a>.</li>
+              <li>List available skills before installing anything.</li>
+              <li>Install only the skills your team will use during the hackathon.</li>
+              <li>Reload or restart your agent so the new skill instructions are available.</li>
+            </ol>
+          </article>
+          <article class="card">
+            <h3>Good hackathon matches</h3>
+            <ul>
+              <li><code>cuOpt</code> for optimization, routing, logistics, and scheduling agents.</li>
+              <li><code>RAG Blueprint</code> for retrieval-augmented generation demos.</li>
+              <li><code>TensorRT-LLM</code> for inference optimization and deployment work.</li>
+              <li><code>NeMo RL</code>, <code>NeMo Gym</code>, or <code>Megatron</code> skills for Track B training and alignment projects.</li>
+            </ul>
+          </article>
+        </div>
+        <div class="code-wrap">
+          <div class="code-head">bash <button class="copy" onclick="copyCode(this)">Copy</button></div>
+          <pre><code># See the available NVIDIA-verified skills.
+npx skills add nvidia/skills --list
+
+# Interactive install flow.
+npx skills add nvidia/skills
+
+# Install one known skill for Codex without prompts.
+npx skills add nvidia/skills \
+  --skill cuopt-numerical-optimization-api-python \
+  --agent codex \
+  --yes
+
+# Install the same skill into multiple agent clients if your team uses more than one.
+npx skills add nvidia/skills \
+  --skill cuopt-numerical-optimization-api-python \
+  --agent codex \
+  --agent claude-code \
+  --agent cursor \
+  --yes</code></pre>
+        </div>
+        <div class="warning">
+          Treat installed skills like project dependencies: pin what you use in your README, record the skill name in your demo notes, and avoid installing broad extras that your project never exercises.
         </div>
 
         <h3 id="nim-chat">Chat completion starter</h3>
@@ -1322,6 +1373,47 @@ uv run python examples/run_rm.py --config examples/configs/rm.yaml \
           </tbody>
         </table>
 
+        <h3 id="c-personas-india">Nemotron-Personas-India Seed Personas</h3>
+        <p>Use <a href="https://huggingface.co/datasets/nvidia/Nemotron-Personas-India" target="_blank" rel="noreferrer">Nemotron-Personas-India</a> when your project needs India-grounded synthetic user personas for prompt sampling, evaluation coverage, or downstream SFT data creation. It is an open-source CC BY 4.0 dataset of synthetic personas grounded in Indian demographic, geographic, language, education, occupation, and personality-trait distributions.</p>
+        <div class="grid two">
+          <article class="card">
+            <h3>Where it fits</h3>
+            <ul>
+              <li>Track C: seed diverse synthetic conversations, tool-use traces, support tickets, or evaluation prompts.</li>
+              <li>Track B: create persona-conditioned SFT or preference examples, then evaluate on held-out personas.</li>
+              <li>Track A: stress-test agents with rural, urban, multilingual, occupation-specific, and accessibility-sensitive user contexts.</li>
+            </ul>
+          </article>
+          <article class="card">
+            <h3>Dataset facts to cite</h3>
+            <ul>
+              <li>3M records: 1M English, 1M Hindi in Devanagari, and 1M Hindi in Latin script.</li>
+              <li>21M persona descriptions, with 7 persona descriptions per record per language or script.</li>
+              <li>27 fields excluding UUID: persona fields plus contextual fields grounded in official demographic and labor statistics.</li>
+              <li>Coverage across all Indian states and union territories and 640 districts.</li>
+            </ul>
+          </article>
+        </div>
+        <div class="code-wrap">
+          <div class="code-head">python <button class="copy" onclick="copyCode(this)">Copy</button></div>
+          <pre><code>from datasets import load_dataset
+
+# English personas
+personas_en = load_dataset("nvidia/Nemotron-Personas-India", "en_IN", split="train")
+
+# Hindi personas in Devanagari
+personas_hi_deva = load_dataset("nvidia/Nemotron-Personas-India", "hi_Deva_IN", split="train")
+
+# Hindi personas in Latin script
+personas_hi_latn = load_dataset("nvidia/Nemotron-Personas-India", "hi_Latn_IN", split="train")
+
+sample = personas_en.shuffle(seed=42).select(range(1000))
+print(sample[0])</code></pre>
+        </div>
+        <div class="warning">
+          These are synthetic personas, not real people. Do not present them as census records, do not add real PII, and document any filtering or sampling choices in your quality report.
+        </div>
+
         <h3>Install base packages</h3>
         <div class="code-wrap">
           <div class="code-head">bash <button class="copy" onclick="copyCode(this)">Copy</button></div>
@@ -1330,7 +1422,7 @@ cd track-c-sdg
 python3 -m venv .venv
 source .venv/bin/activate
 
-pip install -U openai python-dotenv pandas pyarrow pydantic rich
+pip install -U openai python-dotenv pandas pyarrow pydantic rich datasets
 pip install -U data-designer
 
 export NVIDIA_API_KEY=nvapi-your-key
@@ -1825,12 +1917,14 @@ Known limitations:
             <tr><td>NIM</td><td>NVIDIA NIM docs</td><td><a href="https://docs.nvidia.com/nim/" target="_blank" rel="noreferrer">docs.nvidia.com/nim</a></td></tr>
             <tr><td>NIM API</td><td>NIM LLM API reference</td><td><a href="https://docs.nvidia.com/nim/large-language-models/latest/reference/api-reference.html" target="_blank" rel="noreferrer">NIM LLM API reference</a></td></tr>
             <tr><td>Model</td><td>Nemotron 3 Nano</td><td><a href="https://build.nvidia.com/nvidia/nemotron-3-nano-30b-a3b/systemcard" target="_blank" rel="noreferrer">Nemotron 3 Nano on build.nvidia.com</a></td></tr>
+            <tr><td>Agent Skills</td><td>NVIDIA verified skills catalog</td><td><a href="https://github.com/NVIDIA/skills" target="_blank" rel="noreferrer">github.com/NVIDIA/skills</a></td></tr>
             <tr><td>Track A</td><td>NeMo Agent Toolkit docs</td><td><a href="https://docs.nvidia.com/nemo/agent-toolkit/" target="_blank" rel="noreferrer">docs.nvidia.com/nemo/agent-toolkit</a></td></tr>
             <tr><td>Track A</td><td>NeMo Agent Toolkit GitHub</td><td><a href="https://github.com/NVIDIA/NeMo-Agent-Toolkit" target="_blank" rel="noreferrer">github.com/NVIDIA/NeMo-Agent-Toolkit</a></td></tr>
             <tr><td>Track A</td><td>NemoClaw docs</td><td><a href="https://docs.nvidia.com/nemoclaw/latest/index.html" target="_blank" rel="noreferrer">docs.nvidia.com/nemoclaw</a></td></tr>
             <tr><td>Track B</td><td>Megatron-Bridge docs</td><td><a href="https://docs.nvidia.com/nemo/megatron-bridge/latest/" target="_blank" rel="noreferrer">docs.nvidia.com/nemo/megatron-bridge</a></td></tr>
             <tr><td>Track B</td><td>Nemotron 3 Nano Megatron-Bridge guide</td><td><a href="https://docs.nvidia.com/nemo/megatron-bridge/latest/models/llm/nemotron3.html" target="_blank" rel="noreferrer">Nemotron 3 Nano guide</a></td></tr>
             <tr><td>Track B</td><td>NeMo RL docs</td><td><a href="https://docs.nvidia.com/nemo/rl/latest/index.html" target="_blank" rel="noreferrer">docs.nvidia.com/nemo/rl</a></td></tr>
+            <tr><td>Track B/C</td><td>Nemotron-Personas-India dataset</td><td><a href="https://huggingface.co/datasets/nvidia/Nemotron-Personas-India" target="_blank" rel="noreferrer">Hugging Face dataset card</a></td></tr>
             <tr><td>Track C</td><td>NeMo Data Designer GitHub</td><td><a href="https://github.com/NVIDIA-NeMo/DataDesigner" target="_blank" rel="noreferrer">github.com/NVIDIA-NeMo/DataDesigner</a></td></tr>
             <tr><td>Track C</td><td>NeMo Curator docs</td><td><a href="https://docs.nvidia.com/nemo/curator/latest/about/index.html" target="_blank" rel="noreferrer">docs.nvidia.com/nemo/curator</a></td></tr>
             <tr><td>Track C</td><td>Curator synthetic data generation</td><td><a href="https://docs.nvidia.com/nemo/curator/curate-text/synthetic" target="_blank" rel="noreferrer">Curator SDG docs</a></td></tr>
@@ -1845,6 +1939,7 @@ Known limitations:
           <tbody>
             <tr><td>NIM</td><td>NVIDIA NIM, inference microservices for optimized model serving.</td></tr>
             <tr><td>NGC</td><td>NVIDIA catalog and registry for containers, models, and software assets.</td></tr>
+            <tr><td>NVIDIA Agent Skills</td><td>Portable, verified instruction sets that guide agents through NVIDIA product-specific workflows.</td></tr>
             <tr><td>MCP</td><td>Model Context Protocol for connecting agents to tools and context sources.</td></tr>
             <tr><td>A2A</td><td>Agent-to-Agent protocol for exposing and calling specialist agents.</td></tr>
             <tr><td>SFT</td><td>Supervised finetuning using instruction/response examples.</td></tr>
@@ -1866,15 +1961,55 @@ Known limitations:
   <script>
     const tabs = document.querySelectorAll(".tab");
     const panels = document.querySelectorAll(".panel");
+
+    function activatePanel(panelId) {
+      const panel = document.getElementById(panelId);
+      const tab = document.querySelector(`.tab[data-tab="${panelId}"]`);
+      if (!panel || !tab) return false;
+
+      tabs.forEach((item) => item.classList.remove("active"));
+      panels.forEach((item) => item.classList.remove("active"));
+      tab.classList.add("active");
+      panel.classList.add("active");
+      return true;
+    }
+
+    function showHashTarget(hash, behavior = "smooth") {
+      if (!hash || hash === "#") return false;
+
+      const target = document.getElementById(hash.slice(1));
+      const targetPanel = target ? target.closest(".panel") : null;
+      if (!target || !targetPanel) return false;
+
+      activatePanel(targetPanel.id);
+      requestAnimationFrame(() => {
+        target.scrollIntoView({ behavior, block: "start" });
+      });
+      return true;
+    }
+
     tabs.forEach((tab) => {
       tab.addEventListener("click", () => {
-        tabs.forEach((item) => item.classList.remove("active"));
-        panels.forEach((panel) => panel.classList.remove("active"));
-        tab.classList.add("active");
-        document.getElementById(tab.dataset.tab).classList.add("active");
+        activatePanel(tab.dataset.tab);
         window.scrollTo({ top: 0, behavior: "smooth" });
       });
     });
+
+    document.querySelectorAll('aside a[href^="#"]').forEach((link) => {
+      link.addEventListener("click", (event) => {
+        const hash = link.getAttribute("href");
+        if (!showHashTarget(hash)) return;
+
+        event.preventDefault();
+        history.pushState(null, "", hash);
+      });
+    });
+
+    window.addEventListener("hashchange", () => {
+      showHashTarget(window.location.hash);
+    });
+
+    showHashTarget(window.location.hash, "auto");
 
     function copyCode(button) {
       const code = button.closest(".code-wrap").querySelector("pre").innerText;
